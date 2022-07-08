@@ -1,0 +1,160 @@
+(KONFIGURASI ROUTER 1)
+
+conf t 
+ip domain-name afrizal.com
+crypto key generate rsa 
+! 1024
+
+ip ssh ver 2
+enable password cisco
+
+line console 0 
+password cisco
+
+line vty 0 4
+transport input ssh 
+login local 
+username afrizal password cisco 
+
+router ospf 1
+ log-adjacency-changes
+ network 10.0.0.0 0.255.255.255 area 1
+ network 11.0.0.0 0.255.255.255 area 1
+ network 192.168.1.0 0.0.0.255 area 1
+
+router ospf 1
+ log-adjacency-changes
+ network 166.1.0.0 0.0.255.255 area 1
+ network 100.0.0.0 0.255.255.255 area 1
+ network 172.16.0.0 0.0.255.255 area 1
+
+
+
+
+
+(KONFIGURASI ROUTER 2)
+
+conf t 
+ip domain-name afrizal.com
+crypto key generate rsa 
+! 1024
+
+ip ssh ver 2
+enable password cisco
+
+line console 0 
+password cisco
+
+line vty 0 4
+transport input ssh 
+login local 
+username afrizal password cisco 
+
+router ospf 1
+ log-adjacency-changes
+ network 166.1.0.0 0.0.255.255 area 1
+ network 10.0.0.0 0.255.255.255 area 1
+ network 30.0.0.0 0.255.255.255 area 1
+ network 60.0.0.0 0.255.255.255 area 1
+
+
+
+(KONFIGURASI ROUTER 3)
+
+conf t 
+ip domain-name afrizal.com
+crypto key generate rsa 
+! 1024
+
+ip ssh ver 2
+enable password cisco
+
+line console 0 
+password cisco
+
+line vty 0 4
+transport input ssh 
+login local 
+username afrizal password cisco 
+
+router ospf 1
+ log-adjacency-changes
+ network 10.0.0.0 0.255.255.255 area 1
+ network 100.0.0.0 0.255.255.255 area 1
+ network 192.168.100.0 0.0.0.255 area 1
+
+
+(SWITCH 1)
+
+enable 
+conf t 
+
+ip domain-name afrizal.com
+crypto key generate rsa 
+! 1024
+
+ip ssh ver 2
+enable password cisco
+line console 0 
+password cisco
+line vty 0 4
+transport input ssh 
+login local 
+username afrizal password cisco 
+
+int vlan 1
+interface Vlan1
+ip address 172.16.1.2 255.255.0.0 
+ip default-gateway 172.16.1.1
+no shutdown 
+
+vlan 10 
+name office 
+exit 
+int vlan 10 
+
+interface GigabitEthernet1/0/2
+switchport mode access
+switchport access vlan 10
+
+interface GigabitEthernet1/0/4
+switchport mode access
+switchport access vlan 10
+
+interface GigabitEthernet1/0/3
+switchport mode access
+switchport access vlan 20
+
+interface GigabitEthernet1/0/5
+switchport mode access 
+switchport access vlan 20
+
+
+
+(SWITCH 2)
+
+enable 
+conf t 
+
+ip domain-name afrizal.com
+crypto key generate rsa 
+! 1024
+
+ip ssh ver 2
+enable password cisco
+
+line console 0 
+password cisco
+
+line vty 0 4
+transport input ssh 
+login local 
+username afrizal password cisco
+
+interface Vlan1
+ip address 192.168.100.2 255.255.255.0
+exit
+ip default-gateway 192.168.100.1
+
+
+
